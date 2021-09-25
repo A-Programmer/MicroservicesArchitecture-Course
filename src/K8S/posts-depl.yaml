@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postsservice
+  template:
+    metadata:
+      labels:
+        app: postsservice
+    spec:
+      containers:
+        - name: postsservice
+          image: mrsadin/postsservice

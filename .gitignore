@@ -1,0 +1,169 @@
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+######################
+
+*.swp
+*.*~
+project.lock.json
+*.pyc
+nupkg/
+*.swp
+*.*~
+project.lock.json
+*.pyc
+nupkg/
+
+# Visual Studio and Visual Studio Code files
+.vs/
+.code/
+.vscode/
+
+src/.vs/
+src/.code/
+src/.vscode/
+
+src/PostsService/.vs/
+src/PostsService/.code/
+src/PostsService/.vscode/
+
+src/UsersService/.vs/
+src/UsersService/.code/
+src/UsersService/.vscode/
+
+src/K8S/.vs/
+src/K8S/.code/
+src/K8S/.vscode/
+
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## published files
+dist/
+
+## backup directory
+backup/
+
+#Other directories
+notes/
+
+#Temp files
+temp/
+
+#### Build results
+
+# Posts Project
+src/PostsService/.vs/
+src/PostsService/.code/
+src/PostsService/.vscode/
+src/PostsService/[Oo]ut/
+src/PostsService/[Oo]bj/
+src/PostsService/[Bb]in/
+src/PostsService/bld/
+src/PostsService/build/
+src/PostsService/x86/
+src/PostsService/x64/
+src/PostsService/[Rr]eleases/
+src/PostsService/[Rr]elease/
+src/PostsService/[Dd]ebugPublic/
+src/PostsService/[Dd]ebug/
+
+# Users Project
+src/UsersService/.vs/
+src/UsersService/.code/
+src/UsersService/.vscode/
+src/UsersService/[Oo]ut/
+src/UsersService/[Oo]bj/
+src/UsersService/[Bb]in/
+src/UsersService/bld/
+src/UsersService/build/
+src/UsersService/x86/
+src/UsersService/x64/
+src/UsersService/[Rr]eleases/
+src/UsersService/[Rr]elease/
+src/UsersService/[Dd]ebugPublic/
+src/UsersService/[Dd]ebug/
+
+## others
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+msbuild.log
+msbuild.err
+msbuild.wrn
+
