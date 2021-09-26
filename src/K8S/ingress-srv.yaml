@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+spec:
+  rules:
+    - host: kamransadin.com
+      http:
+        paths:
+          - path: /api/posts
+            pathType: Prefix
+            backend:
+              service:
+                name: posts-clusterip-srv
+                port:
+                  number: 80
+          - path: /api/u/posts
+            pathType: Prefix
+            backend:
+              service:
+                name: users-clusterip-srv
+                port:
+                  number: 80

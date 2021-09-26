@@ -1,31 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: posts-depl
+  name: users-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: postsservice
+      app: usersservice
   template:
     metadata:
       labels:
-        app: postsservice
+        app: usersservice
     spec:
       containers:
-        - name: postsservice
-          image: mrsadin/postsservice
+        - name: usersservice
+          image: mrsadin/usersservice:latest
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: posts-clusterip-srv
+  name: users-clusterip-srv
 spec:
   type: ClusterIP
   selector:
-    app: postsservice
+    app: usersservice
   ports:
-  - name: postsservice
+  - name: usersservice
     protocol: TCP
     port: 80
     targetPort: 80

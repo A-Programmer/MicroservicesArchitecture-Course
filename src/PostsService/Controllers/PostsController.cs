@@ -1,11 +1,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PostsService.Data;
 using PostsService.Dtos;
 using PostsService.Models;
+using PostsService.SyncDataServices;
 
 namespace PostsService.Controllers
 {
@@ -15,11 +17,15 @@ namespace PostsService.Controllers
     {
         private readonly IPostRepository _repo;
         private readonly IMapper _mapper;
+        private readonly IUserDataClient _client;
 
-        public PostsController(IPostRepository repo, IMapper mapper)
+        public PostsController(IPostRepository repo,
+            IMapper mapper,
+            IUserDataClient client)
         {
             _repo = repo;
             _mapper = mapper;
+            _client = client;
         }
 
         [HttpGet]
@@ -45,13 +51,22 @@ namespace PostsService.Controllers
         }
 
         [HttpPost]
-        public ActionResult<PostReadDto> CreatePost(PostCreateDto postCreateDto)
+        public async Task<ActionResult<PostReadDto>> CreatePost(PostCreateDto postCreateDto)
         {
             var post = _mapper.Map<Post>(postCreateDto);
             _repo.CreatePost(post);
             _repo.SaveChanges();
 
             var postReadDto = _mapper.Map<PostReadDto>(post);
+
+            try
+            {
+                await _client.SendPostToUsers(postReadDto);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(" ==> Could not send synchronously: " + ex.Message);
+            }
 
             return CreatedAtRoute(nameof(GetPostById), new { id = postReadDto.Id }, postReadDto);
         }
