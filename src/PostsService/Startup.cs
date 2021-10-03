@@ -19,12 +19,17 @@ namespace PostsService
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        
+        public IConfiguration Configuration { get; }
+
+        private readonly IWebHostEnvironment _env;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -32,9 +37,19 @@ namespace PostsService
             services.AddControllers();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            
-            services.AddDbContext<AppDbContext>(opt =>
-                    opt.UseInMemoryDatabase("PostsDb"));
+
+            if(_env.IsProduction())
+            {
+                Console.WriteLine(" ==> Using SQL Server Db Provider.");
+                services.AddDbContext<AppDbContext>(opt =>
+                    opt.UseSqlServer(Configuration.GetConnectionString("PostsConnectionString")));
+            }
+            else
+            {
+                Console.WriteLine(" ==> Using In Memory Database");
+                services.AddDbContext<AppDbContext>(opt =>
+                        opt.UseInMemoryDatabase("PostsDb"));
+            }
 
             services.AddHttpClient<IUserDataClient, HttpUserDataClient>();
 
@@ -68,7 +83,7 @@ namespace PostsService
                 endpoints.MapControllers();
             });
 
-            SeedDb.Seed(app);
+            SeedDb.Seed(app, _env.IsProduction());
         }
     }
 }

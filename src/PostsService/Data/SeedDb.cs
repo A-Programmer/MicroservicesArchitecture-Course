@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PostsService.Models;
 
@@ -8,16 +9,28 @@ namespace PostsService.Data
 {
     public static class SeedDb
     {
-        public static void Seed(IApplicationBuilder app)
+        public static void Seed(IApplicationBuilder app, bool isProduction)
         {
             using(var serviceScope = app.ApplicationServices.CreateScope())
             {
-                SeedData(serviceScope.ServiceProvider.GetService<AppDbContext>());
+                SeedData(serviceScope.ServiceProvider.GetService<AppDbContext>(), isProduction);
             }
         }
 
-        private static void SeedData(AppDbContext context)
+        private static void SeedData(AppDbContext context, bool isProduction)
         {
+            if(isProduction)
+            {
+                Console.WriteLine(" ==> Attempting to apply migrations");
+                try
+                {
+                    context.Database.Migrate();
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine($" ==> Could not apply migrations {ex.Message}");
+                }
+            }
             if(!context.Posts.Any())
             {
                 Console.WriteLine(" ==> Seeding Database ...");
