@@ -1,6 +1,6 @@
 using PostsService.Dtos;
 
-namespace PostsServices.AsyncDataServices
+namespace PostsService.AsyncDataServices
 {
     public interface IMessageBusClient
     {
