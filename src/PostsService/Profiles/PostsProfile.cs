@@ -11,6 +11,7 @@ namespace PostsService.Profiles
             // Source => Destination
             CreateMap<Post, PostReadDto>();
             CreateMap<PostCreateDto, Post>();
+            CreateMap<PostReadDto, PostPublishedDto>();
         }
     }
 }
