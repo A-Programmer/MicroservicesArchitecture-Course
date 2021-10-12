@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PostsService.AsyncDataServices;
 using PostsService.Data;
 using PostsService.SyncDataServices;
 
@@ -37,6 +38,8 @@ namespace PostsService
             services.AddControllers();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddSingleton<IMessageBusClient, MessageBusClient>();
 
             if(_env.IsProduction())
             {
