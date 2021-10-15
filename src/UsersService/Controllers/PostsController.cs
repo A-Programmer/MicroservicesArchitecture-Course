@@ -71,12 +71,12 @@ namespace UsersService.Controllers
                 new { userId = userId, postId = postReadDto.Id}, postReadDto);
         }
 
-        // [HttpPost]
-        // public IActionResult TestInboundConnection()
-        // {
-        //     Console.WriteLine("Inbound POST # Users Service");
+        [HttpPost]
+        public IActionResult TestInboundConnection()
+        {
+            Console.WriteLine("Inbound POST # Users Service");
 
-        //     return Ok("Inbound test from Posts Controller");
-        // }
+            return Ok("Inbound test from Posts Controller");
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using PostsService.AsyncDataServices;
 using PostsService.Data;
 using PostsService.Dtos;
 using PostsService.Models;
@@ -17,14 +18,17 @@ namespace PostsService.Controllers
     {
         private readonly IPostRepository _repo;
         private readonly IMapper _mapper;
+        private readonly IMessageBusClient _messageBusClient;
         private readonly IUserDataClient _client;
 
         public PostsController(IPostRepository repo,
             IMapper mapper,
+            IMessageBusClient messageBusClient,
             IUserDataClient client)
         {
             _repo = repo;
             _mapper = mapper;
+            _messageBusClient = messageBusClient;
             _client = client;
         }
 
@@ -59,6 +63,7 @@ namespace PostsService.Controllers
 
             var postReadDto = _mapper.Map<PostReadDto>(post);
 
+            //Sync Messaging
             try
             {
                 await _client.SendPostToUsers(postReadDto);
@@ -66,6 +71,18 @@ namespace PostsService.Controllers
             catch(Exception ex)
             {
                 Console.WriteLine(" ==> Could not send synchronously: " + ex.Message);
+            }
+
+            //Async Messaging
+            try
+            {
+                var postPublishedDto = _mapper.Map<PostPublishedDto>(postReadDto);
+                postPublishedDto.Event = "Post_Published";
+                _messageBusClient.PublishNewPost(postPublishedDto);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($" ==> Could not send message, {ex.Message}");
             }
 
             return CreatedAtRoute(nameof(GetPostById), new { id = postReadDto.Id }, postReadDto);
