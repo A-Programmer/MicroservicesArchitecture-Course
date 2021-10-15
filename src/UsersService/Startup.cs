@@ -12,7 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using UsersService.AsyncDataServices;
 using UsersService.Data;
+using UsersService.EventProcessing;
 
 namespace UsersService
 {
@@ -30,6 +32,8 @@ namespace UsersService
             services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("UsersDb"));
             services.AddScoped<IUsersRepo, UsersRepo>();
             services.AddControllers();
+            services.AddHostedService<MessageBusSubscriber>();
+            services.AddSingleton<IEventProcessor, EventProcessor>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {

@@ -17,7 +17,21 @@ spec:
                 name: posts-clusterip-srv
                 port:
                   number: 80
-          - path: /api/u/posts
+          - path: /api/users/posts
+            pathType: Prefix
+            backend:
+              service:
+                name: users-clusterip-srv
+                port:
+                  number: 80
+          - path: /api/users/1/posts
+            pathType: Prefix
+            backend:
+              service:
+                name: users-clusterip-srv
+                port:
+                  number: 80
+          - path: /api/u/users
             pathType: Prefix
             backend:
               service:

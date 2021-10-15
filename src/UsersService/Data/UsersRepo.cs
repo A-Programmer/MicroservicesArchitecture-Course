@@ -28,6 +28,11 @@ namespace UsersService.Data
             _context.Users.Add(user);
         }
 
+        public bool ExternalPostExists(int externalPostId)
+        {
+            return _context.Posts.Any(p => p.ExtenralId == externalPostId);
+        }
+
         public IEnumerable<Post> GetAllPosts()
         {
             return _context.Posts.OrderByDescending(x => x.Id).ToList();
@@ -60,6 +65,11 @@ namespace UsersService.Data
         public bool IsUserExist(int userId)
         {
             return _context.Users.Any(u => u.Id == userId);
+        }
+
+        public User GetUserById(int id)
+        {
+            return _context.Users.FirstOrDefault(u => u.Id == id);
         }
 
         public bool SaveChanges()

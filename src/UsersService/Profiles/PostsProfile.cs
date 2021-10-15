@@ -14,6 +14,11 @@ namespace UsersService.Profiles
             CreateMap<PostCreateDto, Post>();
 
             CreateMap<User, ReadUserDto>();
+
+            CreateMap<CreateUserDto, User>();
+
+            CreateMap<PostPublishedDto, Post>()
+                .ForMember(dest => dest.ExtenralId, opt => opt.MapFrom(p => p.Id));
         }
     }
 }

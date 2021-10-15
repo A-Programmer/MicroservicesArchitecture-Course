@@ -14,9 +14,12 @@ namespace UsersService.Data
         void CreatePost(int userId, Post post);
         bool IsPostExist(int postId);
 
+        bool ExternalPostExists(int externalPostId);
+
         //Users
         IEnumerable<User> GetAllUsers();
         bool IsUserExist(int userId);
+        User GetUserById(int id);
         void CreateUser(User user);
 
     }
